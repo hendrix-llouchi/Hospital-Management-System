@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import Header from '../../components/Header';
+import { nurseService } from '../../services/nurseService';
 import './NurseDashboard.css';
 
 export default function NurseDashboard() {
+    const [loading, setLoading] = useState(false);
     const [patient, setPatient] = useState({
         name: '', age: '', gender: '', phone: '',
         temperature: '', weight: '', height: '',
@@ -13,9 +15,31 @@ export default function NurseDashboard() {
         setPatient({ ...patient, [field]: e.target.value });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        alert('Patient registered successfully!');
+        setLoading(true);
+        try {
+            const registeredPatient = await nurseService.registerPatient(patient);
+            // If the intake ID is returned or if we need to submit vitals separately
+            const intakeId = registeredPatient.id || registeredPatient.intakeId;
+            if (intakeId) {
+                await nurseService.submitVitals(intakeId, {
+                    temperature: patient.temperature,
+                    weight: patient.weight,
+                    height: patient.height,
+                });
+            }
+            alert('Patient registered and vitals submitted successfully!');
+            setPatient({
+                name: '', age: '', gender: '', phone: '',
+                temperature: '', weight: '', height: '',
+                hospitalId: '', nhis: '', notes: '',
+            });
+        } catch (err) {
+            alert(`Error: ${err.message}`);
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (

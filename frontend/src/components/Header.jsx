@@ -1,9 +1,32 @@
+import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { notificationService } from '../services/notificationService';
 import './Header.css';
 
-export default function Header({ role = 'doctor', userName = '', specialty = '' }) {
+export default function Header({ role = 'doctor', userId = '1', userName = '', specialty = '' }) {
     const navigate = useNavigate();
     const location = useLocation();
+    const [unreadCount, setUnreadCount] = useState(0);
+
+    useEffect(() => {
+        const fetchUnreadCount = async () => {
+            try {
+                let count = 0;
+                if (role === 'doctor') {
+                    count = await notificationService.getDoctorUnreadCount(userId);
+                } else if (role === 'pharmacist') {
+                    count = await notificationService.getPharmacistUnreadCount(userId);
+                }
+                setUnreadCount(count.count || count || 0);
+            } catch (err) {
+                console.error('Failed to fetch notifications:', err);
+            }
+        };
+
+        fetchUnreadCount();
+        const interval = setInterval(fetchUnreadCount, 30000); // Polling every 30s
+        return () => clearInterval(interval);
+    }, [role, userId]);
 
     const navItems = {
         doctor: [
@@ -68,7 +91,7 @@ export default function Header({ role = 'doctor', userName = '', specialty = '' 
                             <path d="M13 7C13 5.67392 12.4732 4.40215 11.5355 3.46447C10.5979 2.52678 9.32608 2 8 2C6.67392 2 5.40215 2.52678 4.46447 3.46447C3.52678 4.40215 3 5.67392 3 7C3 14 1 16 1 16H15C15 16 13 14 13 7Z" stroke="#6a816c" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                             <path d="M9.15 19C8.87 19.44 8.45 19.72 8 19.72C7.55 19.72 7.13 19.44 6.85 19" stroke="#6a816c" strokeWidth="1.5" strokeLinecap="round" />
                         </svg>
-                        <span className="notification-dot" />
+                        {unreadCount > 0 && <span className="notification-dot" />}
                     </button>
 
                     <div className="app-header__divider" />
