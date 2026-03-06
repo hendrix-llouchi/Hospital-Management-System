@@ -1,0 +1,743 @@
+/* ═══ Doctor Dashboard ═══ */
+.doctor-page {
+    min-height: 100vh;
+    background: var(--color-bg);
+    display: flex;
+    flex-direction: column;
+}
+
+.doctor-main {
+    flex: 1;
+    max-width: 1400px;
+    width: 100%;
+    padding: 32px 32px 58px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ─── Header section ─── */
+.doctor-main__header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding-bottom: 32px;
+}
+
+.doctor-main__header-left {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.doctor-main__header-badges {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.badge {
+    padding: 4px 10px;
+    border-radius: var(--radius-full);
+    font-weight: 700;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    line-height: 16px;
+}
+
+.badge--in-progress {
+    background: var(--color-primary-light);
+    color: var(--color-primary-dark);
+}
+
+.doctor-main__time {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.text-muted-sm {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+    color: var(--color-text-green-muted);
+}
+
+.page-heading {
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 37.5px;
+    letter-spacing: -0.75px;
+    color: var(--color-text-dark-2);
+}
+
+.btn-primary-action {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    height: 40px;
+    padding: 0 24px;
+    background: var(--color-primary-dark);
+    border-radius: var(--radius-lg);
+    color: var(--color-white);
+    font-weight: 700;
+    font-size: 14px;
+    box-shadow: var(--shadow-btn-primary);
+    transition: transform 0.15s, box-shadow 0.2s;
+}
+
+.btn-primary-action:hover {
+    transform: translateY(-1px);
+    box-shadow: 0px 6px 10px -1px rgba(108, 203, 117, 0.3), 0px 4px 6px -2px rgba(108, 203, 117, 0.3);
+}
+
+/* ─── Content Layout ─── */
+.doctor-content {
+    display: flex;
+    gap: 32px;
+}
+
+/* ─── Sidebar ─── */
+.doctor-sidebar {
+    width: 280px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+/* Patient Card */
+.patient-card {
+    background: var(--color-white);
+    border: 1px solid var(--color-border-green);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+}
+
+.patient-card__header {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 20px 21px;
+    border-bottom: 1px solid var(--color-border-green);
+}
+
+.patient-card__edit-btn {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    display: flex;
+    align-items: center;
+}
+
+.patient-card__avatar {
+    margin-bottom: 0;
+    padding-bottom: 16px;
+}
+
+.patient-card__avatar-circle {
+    width: 96px;
+    height: 96px;
+    border-radius: var(--radius-full);
+    background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+    border: 4px solid var(--color-white);
+    box-shadow: var(--shadow-avatar);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 28px;
+    color: var(--color-primary-dark);
+}
+
+.patient-card__name {
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 28px;
+    color: var(--color-text-dark-2);
+}
+
+.patient-card__id {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    color: var(--color-text-green-muted);
+    padding-bottom: 12px;
+}
+
+.patient-card__tags {
+    display: flex;
+    gap: 8px;
+}
+
+.tag {
+    padding: 5px 9px;
+    background: var(--color-bg);
+    border: 1px solid var(--color-border-green);
+    border-radius: var(--radius-sm);
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 16px;
+    color: var(--color-text-dark-2);
+}
+
+.patient-card__body {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.patient-card__stats {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.stat-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.stat-label {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    color: var(--color-text-green-muted);
+}
+
+.stat-value {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+    color: var(--color-text-dark-2);
+}
+
+.stat-value--danger {
+    color: var(--color-danger);
+}
+
+.btn-outline-primary {
+    width: 100%;
+    padding: 9px 0;
+    border: 1px solid var(--color-primary-dark);
+    border-radius: var(--radius-lg);
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--color-primary-dark);
+    text-align: center;
+    transition: background 0.2s;
+}
+
+.btn-outline-primary:hover {
+    background: var(--color-primary-light);
+}
+
+/* ─── Vitals Card ─── */
+.vitals-card {
+    background: var(--color-white);
+    border: 1px solid var(--color-border-green);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-sm);
+    padding: 21px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.vitals-card__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.vitals-card__title-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.vitals-card__title {
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 28px;
+    color: var(--color-text-dark-2);
+}
+
+.vitals-card__by {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.text-xs-muted {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 16px;
+    color: var(--color-text-green-muted);
+}
+
+.vitals-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.vital-item {
+    background: var(--color-bg);
+    border: 1px solid var(--color-border-green);
+    border-radius: var(--radius-lg);
+    padding: 13px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.vital-item__label {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 16px;
+    color: var(--color-text-green-muted);
+}
+
+.vital-item__value {
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 28px;
+    color: var(--color-text-dark-2);
+}
+
+.vital-item__value small {
+    font-weight: 400;
+    font-size: 12px;
+    color: var(--color-text-green-muted);
+}
+
+.vital-item__unit {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 16px;
+    color: var(--color-text-green-muted);
+}
+
+.vitals-card__timestamp {
+    text-align: right;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 16px;
+    color: var(--color-text-green-muted);
+}
+
+/* ─── Main content section ─── */
+.doctor-main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    min-width: 0;
+}
+
+/* ─── Card ─── */
+.card {
+    background: var(--color-white);
+    border: 1px solid var(--color-border-green);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+}
+
+.card__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 24px 17px;
+    border-bottom: 1px solid var(--color-border-green);
+}
+
+.card__header--muted {
+    background: rgba(246, 248, 246, 0.5);
+}
+
+.card__title-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.card__title {
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 28px;
+    color: var(--color-text-dark-2);
+}
+
+.card__actions {
+    display: flex;
+    gap: 8px;
+}
+
+.icon-btn {
+    padding: 6px;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+}
+
+.icon-btn:hover {
+    background: var(--color-bg);
+}
+
+.card__body {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Form Sections */
+.form-section {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-section__label {
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 20px;
+    color: var(--color-text-dark-2);
+}
+
+.form-section__input-box {
+    background: var(--color-bg);
+    border: 1px solid var(--color-border-green);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+}
+
+.form-section__input {
+    width: 100%;
+    padding: 9px 17px;
+    font-size: 14px;
+    line-height: 20px;
+    color: var(--color-text-dark-2);
+}
+
+/* Rich text editor toolbar */
+.rte-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 13px 8px;
+    background: var(--color-bg);
+    border: 1px solid var(--color-border-green);
+    border-bottom: none;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+}
+
+.rte-btn {
+    padding: 4px;
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    color: var(--color-text-dark-2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 20px;
+    transition: background 0.2s;
+}
+
+.rte-btn:hover {
+    background: var(--color-border-green);
+}
+
+.rte-divider {
+    width: 1px;
+    height: 20px;
+    background: var(--color-border-green);
+    margin: 0 4px;
+}
+
+.form-section__textarea {
+    width: 100%;
+    padding: 9px 17px;
+    border: 1px solid var(--color-border-green);
+    border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+    font-size: 14px;
+    line-height: 20px;
+    color: var(--color-text-dark-2);
+    resize: vertical;
+    min-height: 120px;
+    background: var(--color-white);
+}
+
+/* ─── Prescription ─── */
+.btn-text-primary {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--color-primary-dark);
+    transition: opacity 0.2s;
+}
+
+.btn-text-primary:hover {
+    opacity: 0.8;
+}
+
+.prescription-list {
+    /* no extra styles needed */
+}
+
+.prescription-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 16px 24px;
+}
+
+.prescription-item__icon {
+    padding-top: 4px;
+}
+
+.prescription-item__icon>div,
+.prescription-item__icon {
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-lg);
+    background: var(--color-primary-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.prescription-item__details {
+    flex: 1;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+}
+
+.prescription-item__drug {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.prescription-item__name {
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 20px;
+    color: var(--color-text-dark-2);
+}
+
+.prescription-item__form {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 16px;
+    color: var(--color-text-green-muted);
+}
+
+.prescription-item__meta {
+    display: flex;
+    gap: 16px;
+}
+
+.prescription-item__meta-col {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 130px;
+}
+
+.meta-label {
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 16px;
+    color: var(--color-text-green-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+}
+
+.meta-value {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+    color: var(--color-text-dark-2);
+}
+
+/* Add Med Form */
+.add-med-form {
+    padding: 17px 24px 16px;
+    background: var(--color-bg);
+    border-top: 1px solid var(--color-border-green);
+}
+
+.add-med-form__row {
+    display: flex;
+    gap: 16px;
+    align-items: flex-end;
+}
+
+.add-med-form__field {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.add-med-form__field--wide {
+    flex: 2.5;
+}
+
+.add-med-form__field--narrow {
+    width: 129px;
+    flex-shrink: 0;
+}
+
+.add-med-form__field--buttons {
+    flex-direction: row;
+    gap: 8px;
+    align-items: flex-end;
+}
+
+.add-med-form__label {
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 16px;
+    color: var(--color-text-green-muted);
+}
+
+.add-med-form__input-wrap {
+    position: relative;
+}
+
+.add-med-form__input {
+    width: 100%;
+    padding: 8px 13px 9px;
+    background: var(--color-white);
+    border: 1px solid var(--color-border-green);
+    border-radius: var(--radius-md);
+    font-size: 14px;
+    color: var(--color-text-dark-2);
+}
+
+.add-med-form__input::placeholder {
+    color: #6b7280;
+}
+
+.add-med-form__search-icon {
+    position: absolute;
+    right: 8px;
+    top: 8px;
+}
+
+.btn-secondary {
+    flex: 1;
+    padding: 6px 0;
+    background: var(--color-border-green);
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--color-text-dark-2);
+    text-align: center;
+    transition: background 0.2s;
+}
+
+.btn-secondary:hover {
+    background: #d4ddd5;
+}
+
+.btn-save {
+    flex: 1;
+    padding: 6px 0;
+    background: var(--color-primary-light-2);
+    border-radius: var(--radius-md);
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--color-primary-dark);
+    text-align: center;
+    transition: background 0.2s;
+}
+
+.btn-save:hover {
+    background: rgba(108, 203, 117, 0.3);
+}
+
+/* ─── Lab Tests ─── */
+.btn-text-muted {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--color-text-green-muted);
+    transition: color 0.2s;
+}
+
+.btn-text-muted:hover {
+    color: var(--color-text-dark-2);
+}
+
+.lab-tests {
+    display: flex;
+    gap: 8px;
+    padding: 0 24px 25px;
+    flex-wrap: wrap;
+}
+
+.lab-test-chip {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 13px;
+    background: var(--color-bg);
+    border: 1px solid var(--color-border-green);
+    border-radius: var(--radius-lg);
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+    color: var(--color-text-dark-2);
+}
+
+.lab-test-chip__remove {
+    display: flex;
+    align-items: center;
+    padding: 2px;
+    transition: opacity 0.2s;
+}
+
+.lab-test-chip__remove:hover {
+    opacity: 0.6;
+}
+
+.lab-test-add {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 13px 8px;
+    background: var(--color-bg);
+    border: 1px dashed var(--color-border-green);
+    border-radius: var(--radius-lg);
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    color: var(--color-text-green-muted);
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s;
+}
+
+.lab-test-add:hover {
+    border-color: var(--color-primary-dark);
+    color: var(--color-primary-dark);
+}

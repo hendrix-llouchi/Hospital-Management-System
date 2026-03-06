@@ -1,0 +1,5 @@
+/* Global styles are in index.css. Page-specific styles are in their respective directories. */
+#root {
+  width: 100%;
+  height: 100%;
+}

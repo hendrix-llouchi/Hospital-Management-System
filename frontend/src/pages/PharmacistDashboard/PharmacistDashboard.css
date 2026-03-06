@@ -1,0 +1,318 @@
+/* ═══ Pharmacist Dashboard ═══ */
+.pharmacist-page {
+    min-height: 100vh;
+    background: var(--color-bg);
+    display: flex;
+    flex-direction: column;
+}
+
+.pharmacist-main {
+    flex: 1;
+    max-width: 1200px;
+    width: 100%;
+    padding: 32px 40px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+/* ─── Header ─── */
+.pharmacist-main__header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+}
+
+.pharmacist-main__header-left {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.page-subtitle {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 21px;
+    color: var(--color-text-green-muted);
+}
+
+.pharmacist-main__header-actions {
+    display: flex;
+    gap: 12px;
+}
+
+.btn-filter {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 17px;
+    background: var(--color-white);
+    border: 1px solid var(--color-border-muted);
+    border-radius: var(--radius-lg);
+    font-weight: 500;
+    font-size: 14px;
+    color: var(--color-text-green-dark);
+    transition: border-color 0.2s;
+}
+
+.btn-filter:hover {
+    border-color: var(--color-text-green-muted);
+}
+
+/* ─── Tabs ─── */
+.pharmacist-tabs {
+    display: flex;
+    gap: 32px;
+    border-bottom: 1px solid var(--color-border-muted);
+    padding-bottom: 1px;
+}
+
+.pharmacist-tab {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 0 14px;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 21px;
+    color: var(--color-text-green-muted);
+    border-bottom: 2px solid transparent;
+    transition: color 0.2s, border-color 0.2s;
+    white-space: nowrap;
+}
+
+.pharmacist-tab:hover {
+    color: var(--color-text-dark-2);
+}
+
+.pharmacist-tab--active {
+    color: var(--color-primary-dark);
+    font-weight: 600;
+    border-bottom-color: var(--color-primary-dark);
+}
+
+.urgent-badge {
+    padding: 2px 8px;
+    background: var(--color-danger-bg);
+    border-radius: var(--radius-full);
+    font-weight: 700;
+    font-size: 10px;
+    line-height: 15px;
+    color: var(--color-danger-dark);
+}
+
+/* ─── Prescription Feed ─── */
+.prescription-feed {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+}
+
+/* ─── Prescription Card ─── */
+.rx-card {
+    background: var(--color-white);
+    border: 1px solid var(--color-border-muted);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.rx-card--urgent {
+    border-left: 4px solid var(--color-border-muted);
+}
+
+.rx-card--preparing {
+    border-left: 4px solid var(--color-border-muted);
+}
+
+/* Card Header */
+.rx-card__header {
+    padding: 20px;
+    border-bottom: 1px solid var(--color-border-green-dark);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.rx-card__header--urgent {
+    background: rgba(254, 242, 242, 0.5);
+}
+
+.rx-card__header-left {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.rx-card__badges {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 4px;
+}
+
+.rx-status-badge {
+    padding: 4px 10px;
+    border-radius: var(--radius-md);
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+.rx-status-badge--pending {
+    background: var(--color-danger-bg);
+    color: var(--color-danger-darkest);
+}
+
+.rx-status-badge--preparing {
+    background: var(--color-warning-bg);
+    color: var(--color-warning-text);
+}
+
+.rx-card__time {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 16px;
+    color: var(--color-text-green-muted);
+}
+
+.rx-card__patient {
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 28px;
+    color: var(--color-text-dark-2);
+}
+
+.rx-card__info {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    color: var(--color-text-green-muted);
+}
+
+.rx-card__header-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+}
+
+.rx-card__rx-label {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 16px;
+    color: var(--color-text-green-muted);
+}
+
+.rx-card__rx-number {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 20px;
+    color: var(--color-text-green-dark);
+}
+
+/* Card Body */
+.rx-card__body {
+    flex: 1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.rx-card__section-title {
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 16px;
+    color: var(--color-green-label);
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+}
+
+.rx-med-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.rx-med-item {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+}
+
+.rx-med-item__icon {
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.rx-med-item__content {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.rx-med-item__name {
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+    color: var(--color-text-green-heading);
+}
+
+.rx-med-item__instructions {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    color: var(--color-text-green-body);
+}
+
+/* Card Footer */
+.rx-card__footer {
+    padding: 17px 16px 16px;
+    background: var(--color-muted-bg);
+    border-top: 1px solid var(--color-border-green-dark);
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+}
+
+.btn-text-action {
+    padding: 8px 16px;
+    border-radius: var(--radius-lg);
+    font-weight: 500;
+    font-size: 14px;
+    color: var(--color-text-green-body);
+    transition: background 0.2s;
+}
+
+.btn-text-action:hover {
+    background: rgba(0, 0, 0, 0.04);
+}
+
+.btn-primary-sm {
+    padding: 8px 20px;
+    background: var(--color-primary-dark);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--color-text-dark-2);
+    transition: transform 0.15s, box-shadow 0.2s;
+}
+
+.btn-primary-sm:hover {
+    transform: translateY(-1px);
+    box-shadow: 0px 3px 6px rgba(108, 203, 117, 0.3);
+}
+
+@media (max-width: 1000px) {
+    .prescription-feed {
+        grid-template-columns: 1fr;
+    }
+}

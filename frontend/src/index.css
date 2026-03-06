@@ -1,0 +1,100 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Roboto:wght@400;500;700;900&family=Liberation+Mono:wght@700&display=swap');
+
+/* ─── CSS Reset & Design Tokens ─── */
+:root {
+  /* Colors */
+  --color-bg: #f6f8f6;
+  --color-white: #ffffff;
+  --color-primary: #6bcb75;
+  --color-primary-dark: #6ccb75;
+  --color-primary-light: rgba(108, 203, 117, 0.1);
+  --color-primary-light-2: rgba(108, 203, 117, 0.2);
+  --color-text-dark: #0f172a;
+  --color-text-dark-2: #121613;
+  --color-text-muted: #334155;
+  --color-text-muted-2: #475569;
+  --color-text-light: #64748b;
+  --color-text-placeholder: #94a3b8;
+  --color-text-green-muted: #6a816c;
+  --color-text-green-dark: #415243;
+  --color-text-green-body: #526654;
+  --color-text-green-heading: #334035;
+  --color-border: #e2e8f0;
+  --color-border-green: #e4ebe5;
+  --color-border-green-dark: #dde3de;
+  --color-border-muted: #c0ccc2;
+  --color-muted-bg: #f1f4f1;
+  --color-danger: #ef4444;
+  --color-danger-dark: #dc2626;
+  --color-danger-darkest: #b91c1c;
+  --color-danger-bg: #fee2e2;
+  --color-warning-bg: #fef3c7;
+  --color-warning-text: #92400e;
+  --color-green-label: #819984;
+
+  /* Fonts */
+  --font-inter: 'Inter', sans-serif;
+  --font-roboto: 'Roboto', sans-serif;
+  --font-mono: 'Liberation Mono', monospace;
+
+  /* Shadows */
+  --shadow-sm: 0px 1px 2px 0px rgba(0, 0, 0, 0.05);
+  --shadow-btn-primary: 0px 4px 6px -1px rgba(107, 203, 117, 0.2), 0px 2px 4px -2px rgba(107, 203, 117, 0.2);
+  --shadow-avatar: 0px 4px 6px -1px rgba(0, 0, 0, 0.1), 0px 2px 4px -2px rgba(0, 0, 0, 0.1);
+
+  /* Radii */
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+  --radius-full: 9999px;
+}
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  font-family: var(--font-inter);
+  background: var(--color-bg);
+  color: var(--color-text-dark-2);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  background: none;
+}
+
+input, select, textarea {
+  font-family: inherit;
+  border: none;
+  outline: none;
+  background: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+ul, ol {
+  list-style: none;
+}
