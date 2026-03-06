@@ -7,26 +7,42 @@ export default function Header({ role = 'doctor', userId = '1', userName = '', s
     const navigate = useNavigate();
     const location = useLocation();
     const [unreadCount, setUnreadCount] = useState(0);
+    const [unreadList, setUnreadList] = useState([]);
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
     useEffect(() => {
-        const fetchUnreadCount = async () => {
+        const fetchNotifications = async () => {
             try {
                 let count = 0;
+                let list = [];
                 if (role === 'doctor') {
                     count = await notificationService.getDoctorUnreadCount(userId);
+                    list = await notificationService.getDoctorUnread(userId);
                 } else if (role === 'pharmacist') {
                     count = await notificationService.getPharmacistUnreadCount(userId);
+                    list = await notificationService.getPharmacistUnread(userId);
                 }
                 setUnreadCount(count.count || count || 0);
+                setUnreadList(list || []);
             } catch (err) {
                 console.error('Failed to fetch notifications:', err);
             }
         };
 
-        fetchUnreadCount();
-        const interval = setInterval(fetchUnreadCount, 30000); // Polling every 30s
+        fetchNotifications();
+        const interval = setInterval(fetchNotifications, 30000); // Polling every 30s
         return () => clearInterval(interval);
     }, [role, userId]);
+
+    const handleMarkAsRead = async (notificationId) => {
+        try {
+            await notificationService.markAsRead(notificationId);
+            setUnreadList(unreadList.filter(n => n.id !== notificationId));
+            setUnreadCount(Math.max(0, unreadCount - 1));
+        } catch (err) {
+            console.error('Failed to mark read', err);
+        }
+    };
 
     const navItems = {
         doctor: [
@@ -86,13 +102,39 @@ export default function Header({ role = 'doctor', userId = '1', userName = '', s
                 </nav>
 
                 <div className="app-header__actions">
-                    <button className="app-header__notification-btn" aria-label="Notifications">
-                        <svg width="16" height="20" viewBox="0 0 16 20" fill="none">
-                            <path d="M13 7C13 5.67392 12.4732 4.40215 11.5355 3.46447C10.5979 2.52678 9.32608 2 8 2C6.67392 2 5.40215 2.52678 4.46447 3.46447C3.52678 4.40215 3 5.67392 3 7C3 14 1 16 1 16H15C15 16 13 14 13 7Z" stroke="#6a816c" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                            <path d="M9.15 19C8.87 19.44 8.45 19.72 8 19.72C7.55 19.72 7.13 19.44 6.85 19" stroke="#6a816c" strokeWidth="1.5" strokeLinecap="round" />
-                        </svg>
-                        {unreadCount > 0 && <span className="notification-dot" />}
-                    </button>
+                    <div className="notification-wrapper">
+                        <button
+                            className="app-header__notification-btn"
+                            aria-label="Notifications"
+                            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                        >
+                            <svg width="16" height="20" viewBox="0 0 16 20" fill="none">
+                                <path d="M13 7C13 5.67392 12.4732 4.40215 11.5355 3.46447C10.5979 2.52678 9.32608 2 8 2C6.67392 2 5.40215 2.52678 4.46447 3.46447C3.52678 4.40215 3 5.67392 3 7C3 14 1 16 1 16H15C15 16 13 14 13 7Z" stroke="#6a816c" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                <path d="M9.15 19C8.87 19.44 8.45 19.72 8 19.72C7.55 19.72 7.13 19.44 6.85 19" stroke="#6a816c" strokeWidth="1.5" strokeLinecap="round" />
+                            </svg>
+                            {unreadCount > 0 && <span className="notification-dot" />}
+                        </button>
+                        {isDropdownOpen && (role === 'doctor' || role === 'pharmacist') && (
+                            <div className="notification-dropdown">
+                                <div className="notification-dropdown__header">
+                                    <h4>Notifications</h4>
+                                    <span className="badge">{unreadCount}</span>
+                                </div>
+                                <div className="notification-dropdown__list">
+                                    {unreadList.length === 0 ? (
+                                        <div className="notification-dropdown__empty">No new notifications</div>
+                                    ) : (
+                                        unreadList.map(notif => (
+                                            <div className="notification-dropdown__item" key={notif.id}>
+                                                <p>{notif.message || notif.title}</p>
+                                                <button onClick={() => handleMarkAsRead(notif.id)} className="btn-text-action">Mark Read</button>
+                                            </div>
+                                        ))
+                                    )}
+                                </div>
+                            </div>
+                        )}
+                    </div>
 
                     <div className="app-header__divider" />
 

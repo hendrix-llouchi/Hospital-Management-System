@@ -5,11 +5,30 @@ import './NurseDashboard.css';
 
 export default function NurseDashboard() {
     const [loading, setLoading] = useState(false);
+    const [activeIntakes, setActiveIntakes] = useState([]);
     const [patient, setPatient] = useState({
         name: '', age: '', gender: '', phone: '',
         temperature: '', weight: '', height: '',
         hospitalId: '', nhis: '', notes: '',
     });
+
+    // Dummy nurseId for demo, in real app get from auth context
+    const NURSE_ID = 1;
+
+    useEffect(() => {
+        const fetchIntakes = async () => {
+            try {
+                const data = await nurseService.getActiveIntakes(NURSE_ID);
+                setActiveIntakes(data || []);
+            } catch (error) {
+                console.error('Failed to fetch intakes:', error);
+            }
+        };
+        fetchIntakes();
+        // Poll every 30 seconds
+        const interval = setInterval(fetchIntakes, 30000);
+        return () => clearInterval(interval);
+    }, []);
 
     const handleChange = (field) => (e) => {
         setPatient({ ...patient, [field]: e.target.value });
@@ -35,6 +54,9 @@ export default function NurseDashboard() {
                 temperature: '', weight: '', height: '',
                 hospitalId: '', nhis: '', notes: '',
             });
+            // Refresh queue after registration
+            const queueData = await nurseService.getActiveIntakes(NURSE_ID);
+            setActiveIntakes(queueData || []);
         } catch (err) {
             alert(`Error: ${err.message}`);
         } finally {
@@ -51,7 +73,7 @@ export default function NurseDashboard() {
                     <div>
                         <div className="nurse-main__header-badges">
                             <span className="badge badge--in-progress">Active</span>
-                            <span className="text-muted-sm">Registration Queue: 4 patients</span>
+                            <span className="text-muted-sm">Registration Queue: {activeIntakes.length} patients</span>
                         </div>
                         <h1 className="page-heading">Patient Registration</h1>
                     </div>
@@ -234,27 +256,35 @@ export default function NurseDashboard() {
                                 </div>
                             </div>
                             <div className="queue-list">
-                                <div className="queue-item">
-                                    <div className="queue-item__number">1</div>
-                                    <div className="queue-item__info">
-                                        <span className="queue-item__name">Michael Adams</span>
-                                        <span className="queue-item__status">Waiting — 25 min</span>
-                                    </div>
-                                </div>
-                                <div className="queue-item">
-                                    <div className="queue-item__number">2</div>
-                                    <div className="queue-item__info">
-                                        <span className="queue-item__name">Sarah Thompson</span>
-                                        <span className="queue-item__status">Waiting — 12 min</span>
-                                    </div>
-                                </div>
-                                <div className="queue-item">
-                                    <div className="queue-item__number">3</div>
-                                    <div className="queue-item__info">
-                                        <span className="queue-item__name">James Wilson</span>
-                                        <span className="queue-item__status">Just arrived</span>
-                                    </div>
-                                </div>
+                                {activeIntakes.length === 0 ? (
+                                    <div className="empty-state-sm">Queue is empty</div>
+                                ) : (
+                                    activeIntakes.map((intake, i) => (
+                                        <div className="queue-item" key={intake.id || i}>
+                                            <div className="queue-item__number">{i + 1}</div>
+                                            <div className="queue-item__info">
+                                                <span className="queue-item__name">{intake.patient?.name || intake.patientName || 'Unknown Patient'}</span>
+                                                <span className="queue-item__status">
+                                                    {intake.status || 'Waiting'}
+                                                </span>
+                                            </div>
+                                            <button
+                                                className="btn-text-action btn-destructive"
+                                                onClick={async () => {
+                                                    try {
+                                                        await nurseService.releaseIntake(intake.id);
+                                                        setActiveIntakes(activeIntakes.filter(it => it.id !== intake.id));
+                                                    } catch (err) {
+                                                        alert(`Failed to release: ${err.message}`);
+                                                    }
+                                                }}
+                                                title="Release Patient"
+                                            >
+                                                ✕
+                                            </button>
+                                        </div>
+                                    ))
+                                )}
                             </div>
                         </div>
                     </aside>

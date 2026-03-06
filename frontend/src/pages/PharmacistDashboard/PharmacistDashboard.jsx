@@ -13,14 +13,14 @@ export default function PharmacistDashboard() {
             setLoading(true);
             try {
                 let data = [];
-                if (activeTab === 0) data = await pharmacistService.getPendingPrescriptions();
+                if (activeTab === 0) data = await pharmacistService.getOutpatientQueue();
                 else if (activeTab === 1) data = await pharmacistService.getPendingPrescriptions();
-                else if (activeTab === 2) data = await pharmacistService.getRecentPatients();
-                else data = await pharmacistService.getPendingPrescriptions();
+                else if (activeTab === 2) data = await pharmacistService.getPendingPrescriptions(); // Assuming preparing is also pending or we could filter
+                else if (activeTab === 3) data = await pharmacistService.getDispensedPrescriptions();
 
                 setPrescriptions(data || []);
             } catch (err) {
-                console.error('Failed to fetch prescriptions:', err);
+                console.error('Failed to fetch data:', err);
                 setPrescriptions([]);
             } finally {
                 setLoading(false);
