@@ -170,7 +170,7 @@ The AI system:
 ---
 
 # 🎨 Design Principles
-[3/6/2026 3:23 PM] Elinam👊: * Clean and intuitive healthcare dashboard UI
+ * Clean and intuitive healthcare dashboard UI
 * Role-based interfaces for medical staff
 * Real-time notifications
 * Efficient communication between departments
@@ -191,7 +191,7 @@ The AI system:
 # 📜 License
 
 This project is licensed under the MIT License.
-[3/6/2026 3:24 PM] Elinam👊: ├── frontend/                # Frontend application
+├── frontend/                # Frontend application
 │   ├── public/               # Static assets
 │   ├── src/
 │   │   ├── components/       # Reusable UI components
